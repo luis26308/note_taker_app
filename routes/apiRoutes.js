@@ -13,7 +13,15 @@ module.exports = app => {
         });
 
         app.post("api/notes", function (req, res) {
-            notes.push(req.body)
+            notes.push(req.body);
+            notesDb();
         });
+
+        function notesDb() {
+            fs.writeFile("db/db.json", JSON.stringify(notes), err => {
+                if (err) throw err;
+                return true;
+            })
+        }
     });
 }

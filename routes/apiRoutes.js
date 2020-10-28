@@ -11,7 +11,7 @@ module.exports = app => {
             let notes = JSON.parse(data);
             return res.json(notes);
         });
-    })
+    });
 
     app.post("/api/notes", function (req, res) {
         const newNote = req.body;
@@ -22,10 +22,10 @@ module.exports = app => {
 
             fs.writeFile("./db/db.json", JSON.stringify(notes), err => {
                 if (err) throw err;
-                res.json(newNote)
+                return res.json(newNote)
             });
-        })
-    })
+        });
+    });
 
     app.delete("/api/notes/:id", function (req, res) {
         fs.readFile("./db/db.json", "utf8", (err, data) => {
@@ -34,8 +34,9 @@ module.exports = app => {
 
             fs.writeFile("./db/db.json", JSON.stringify(notes), err => {
                 if (err) throw err;
-                fs.readFile("./db/db.json", "utf8", (err, data))
+                return res.json(notes)
             });
-        })
+        });
     });
+    
 };
